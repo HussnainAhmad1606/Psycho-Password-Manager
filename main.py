@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter.messagebox import showinfo
 from cryptography.fernet import Fernet
 import os
+from tabulate import tabulate
 root = Tk()
 root.title("Psycho Password Manager")
 root.geometry("500x300")
@@ -49,16 +50,21 @@ def encrypt_message(message):
 def exportAllPasswords():
     key = load_key()
     f = Fernet(key)
+    passwordsArr = []
     with open("encrypt.txt", "r") as file:
         enc = file.readlines()
     for index, data in enumerate(enc):
         ency = bytes(data, 'utf-8')
         decrypted_message = f.decrypt(ency)
+        print(decrypted_message.decode("utf-8").split(" "))
+        split = decrypted_message.decode("utf-8").split(" ")
+        passwordsArr.append([split[0], split[1], split[2]])
 
-        print(decrypted_message.decode())
-        with open("decrypt.txt", "a") as file:
-            file.write(decrypted_message.decode())
-            file.write("\n")
+    col_names = ["Website", "Email", "Password"]
+    table = tabulate(passwordsArr, headers=col_names, tablefmt="pretty")
+    with open("decrypt.txt", "w") as file:
+        file.write(table)
+    showinfo("SAVED!", "All Passwords are saved on decrypt.txt file")
 
 def savePassword():
     email = emailVar.get()
@@ -71,8 +77,36 @@ def savePassword():
         file.write(message.decode("utf-8"))
         file.write("\n")
 
+    showinfo("SUCCESS", "Password has been saved Successfully!")
+    emailEntry.delete(0, END)
+    websiteEntry.delete(0, END)
+    passwordEntry.delete(0, END)
+    websiteEntry.focus_set()
+
 def showAllPasswords():
-    pass
+    passwords = Tk()
+    passwords.title("Show All Passwords")
+    passwords.geometry("300x300")
+    key = load_key()
+    f = Fernet(key)
+    passwordsArr = []
+    with open("encrypt.txt", "r") as file:
+        enc = file.readlines()
+    for index, data in enumerate(enc):
+        ency = bytes(data, 'utf-8')
+        decrypted_message = f.decrypt(ency)
+        print(decrypted_message.decode("utf-8").split(" "))
+        split = decrypted_message.decode("utf-8").split(" ")
+        passwordsArr.append([split[0], split[1], split[2]])
+
+    col_names = ["Website", "Email", "Password"]
+    table = tabulate(passwordsArr, headers=col_names, tablefmt="pretty")
+    print(table)
+    label = Label(passwords, text=f"{table}")
+    label.pack()
+    quitBtn = Button(passwords, text="Quit", command=passwords.destroy)
+    quitBtn.pack()
+    passwords.mainloop()
 
 
 

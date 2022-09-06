@@ -1,2 +1,13 @@
-Facebook psycho psycho
-Twitter psycho 12345
++-----------+---------------------+-------------+
+|  Website  |        Email        |  Password   |
++-----------+---------------------+-------------+
+| Facebook  |       psycho        |   psycho    |
+|  Twitter  |    hussnainahmad    |  fawadalam  |
+| Instagram | psychocoderofficial | psychocoder |
+|  Github   |  hussnainahmad1606  |  hussnain   |
+|  Twitter  |        hello        |    12345    |
+| Pinterest |      hussnain       |    12345    |
+| WorkChest |    hussnainahmad    |    12345    |
+| Facebook  |      facebook       |    12345    |
+| Facebook  |      facebook       |    12345    |
++-----------+---------------------+-------------+
